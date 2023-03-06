@@ -4,8 +4,7 @@
     <main>
       <div class="grid grid-cols-3 gap-4 m-8">
         <div
-          v-for="fish in $store.state.fishArray"
-          :key="fish.id"
+          v-if="fish"
           class="bloc bg-blue-200 p-4 w-max-content shadow-sm border rounded outline outline-1 hover:bg-blue-300"
         >
           <div>
@@ -19,6 +18,7 @@
             }}
           </div>
         </div>
+        <div v-else>No fish found</div>
       </div>
     </main>
   </div>
@@ -26,10 +26,22 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useStore } from 'vuex'
+import store from '../store'
 
 export default defineComponent({
-  name: 'HomeView',
+  name: 'ProductView',
   components: {},
+  computed: {
+    fish() {
+      const store = useStore()
+      const id = Number(this.$route.params.id)
+      const fish = store.state.fishArray.find(
+        (fish: { id: number }) => fish.id === id
+      )
+      return fish || {}
+    },
+  },
 })
 </script>
 
