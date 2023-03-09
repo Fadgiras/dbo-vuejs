@@ -1,15 +1,18 @@
 <template>
   <div class="home">
-    <header></header>
+    <header class="sticky top-0"></header>
     <main>
-      <div class="grid grid-cols-3 gap-4 m-8">
-        <div
-          v-if="fish"
-          class="bloc bg-blue-200 p-4 w-max-content shadow-sm border rounded outline outline-1 hover:bg-blue-300"
-        >
-          <div>
+      <div v-if="fish" class="grid grid-cols-3 gap- m-8">
+        <div v-if="fish" class="bloc grid grid-cols-2 p-4">
+          <div class="text-3xl pb-16">
             {{ fish.name }}
           </div>
+          <div>
+            <div v-if="fish.sale" class="rotate-12 text-red-600">
+              En promotion !
+            </div>
+          </div>
+
           <div class="text-sm italic font-light">
             {{
               fish.comments == ''
@@ -17,8 +20,13 @@
                 : fish.comments
             }}
           </div>
+          <div>
+            <div>{{ fish.price + '€ /' + fish.unit }}</div>
+          </div>
         </div>
-        <div v-else>No fish found</div>
+      </div>
+      <div v-else>
+        <div class="m-8 text-2xl">No fish found</div>
       </div>
     </main>
   </div>
@@ -27,7 +35,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
-import store from '../store'
 
 export default defineComponent({
   name: 'ProductView',
@@ -39,7 +46,7 @@ export default defineComponent({
       const fish = store.state.fishArray.find(
         (fish: { id: number }) => fish.id === id
       )
-      return fish || {}
+      return fish || null
     },
   },
 })
@@ -49,8 +56,6 @@ export default defineComponent({
 .home {
 }
 header {
-  top: 0;
-  position: sticky;
   min-height: 120px;
   background: #3c7a1f;
 }
