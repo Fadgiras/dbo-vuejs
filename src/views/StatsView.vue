@@ -40,30 +40,47 @@ export default defineComponent({
     },
     sumByDay() {
       let out: number[] = []
-      let expense : number[] = []
+      let expense: number[] = []
       let label: number | Date | string[] = []
       let mainData = store.state.data
 
+      // console.log(mainData.length)
+
       for (let index = 0; index < mainData.length; index++) {
+        // console.log(index)
+
         let date = new Date(mainData[index].date)
+        // console.log(date)
+
         let localeDate = date.toLocaleDateString()
         if (label.includes(localeDate)) {
+          // console.log('include')
+
           //if amount is sell
-          if(mainData[index].type== "OUT"){
-
+          if (mainData[index].type == 'OUT') {
+            out[label.indexOf(localeDate)] += mainData[index].price
+            expense[label.indexOf(localeDate)] += 0
+          } else {
+            expense[label.indexOf(localeDate)] += mainData[index].price
+            out[label.indexOf(localeDate)] += 0
           }
-
-          out[label.indexOf(localeDate)] += mainData[index].price
         } else {
+          // console.log('else include')
+
           label.push(localeDate)
-          out.push(mainData[index].price)
+          if (mainData[index].type == 'OUT') {
+            out.push(mainData[index].price)
+            expense.push(0)
+          } else {
+            expense.push(mainData[index].price)
+            out.push(0)
+          }
         }
+        // console.log(label.length == out.length)
+
+        // this.$data.chartOptions.xaxis.categories= label
+        // this.$data.series[0].data= out
       }
-      console.log(label.length == out.length)
-
-      // this.$data.chartOptions.xaxis.categories= label
-      // this.$data.series[0].data= out
-
       return {
         chartOptions: {
           chart: {
@@ -77,6 +94,10 @@ export default defineComponent({
           {
             name: 'ventes',
             data: out,
+          },
+          {
+            name: 'achats',
+            data: expense,
           },
         ],
       }
