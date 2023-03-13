@@ -65,6 +65,21 @@ const store = createStore({
   mutations: {
     loadAllFish(state, fishArray) {
       state.fishArray = fishArray
+      console.log(state.fishArray)
+    },
+    updateFish(state, selectedfish) {
+      console.log(selectedfish)
+      const index = state.fishArray.findIndex(
+        fish => fish.id === selectedfish.id
+      )
+      state.fishArray[index] = selectedfish
+      console.log(state.fishArray[index])
+    },
+    deleteFish(state, selectedfish) {
+      const index = state.fishArray.findIndex(
+        fish => fish.id === selectedfish.id
+      )
+      state.fishArray.splice(index, 1)
     },
   },
   actions: {},
@@ -108,6 +123,7 @@ fetch('http://127.0.0.1:8000/products/?format=json', {
       )
     )
   })
+  .then(() => console.log('blep'))
   .catch(error => console.error(error))
 
 export default store

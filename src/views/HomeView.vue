@@ -28,14 +28,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-let url = 'http://127.0.0.1:8080/product/'
-
 export default defineComponent({
   name: 'HomeView',
   components: {},
   methods: {
     openWindow(id: string | URL | undefined) {
-      window.open(url + id)
+      this.$router.push('/product/' + id)
     },
   },
 })
