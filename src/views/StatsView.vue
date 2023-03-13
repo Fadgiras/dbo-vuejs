@@ -3,13 +3,14 @@
     <header class="sticky top-0"></header>
     <main>
       <div class="text-3xl pb-16 m-8">Stats de ventes</div>
+      <div class="hidden">{{ sumByDay }} €</div>
       <div class="max-w-[50%]">
         <VueApexCharts
           type="area"
           height="350"
           ref="chart"
-          :options="chartOptions"
-          :series="series"
+          :options="sumByDay.chartOptions"
+          :series="sumByDay.series"
         ></VueApexCharts>
       </div>
     </main>
@@ -20,6 +21,7 @@
 import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
 import VueApexCharts from 'vue3-apexcharts'
+import store from '@/store'
 
 export default defineComponent({
   name: 'StatsView',
@@ -27,32 +29,58 @@ export default defineComponent({
     VueApexCharts,
   },
   computed: {
-    fish() {
-      const store = useStore()
-      const id = 10
-      const fish = store.state.fishArray.find(
-        (fish: { id: number }) => fish.id === id
-      )
-      return fish
+    sumOut() {
+      let sumOut = 0
+      for (let index = 0; index < store.state.data.length; index++) {
+        // console.log(new Date(store.state.data[index].date).toLocaleDateString())
+        if (store.state.data[index].type == 'OUT')
+          sumOut += store.state.data[index].price
+      }
+      return sumOut
     },
-  },
-  data: function () {
-    return {
-      chartOptions: {
-        chart: {
-          id: 'vuechart-example',
+    sumByDay() {
+      let out: number[] = []
+      let expense : number[] = []
+      let label: number | Date | string[] = []
+      let mainData = store.state.data
+
+      for (let index = 0; index < mainData.length; index++) {
+        let date = new Date(mainData[index].date)
+        let localeDate = date.toLocaleDateString()
+        if (label.includes(localeDate)) {
+          //if amount is sell
+          if(mainData[index].type== "OUT"){
+
+          }
+
+          out[label.indexOf(localeDate)] += mainData[index].price
+        } else {
+          label.push(localeDate)
+          out.push(mainData[index].price)
+        }
+      }
+      console.log(label.length == out.length)
+
+      // this.$data.chartOptions.xaxis.categories= label
+      // this.$data.series[0].data= out
+
+      return {
+        chartOptions: {
+          chart: {
+            id: 'vuechart-example',
+          },
+          xaxis: {
+            categories: label,
+          },
         },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
-        },
-      },
-      series: [
-        {
-          name: 'series-1',
-          data: [30, 40, 35, 50, 49, 60, 70, 91],
-        },
-      ],
-    }
+        series: [
+          {
+            name: 'ventes',
+            data: out,
+          },
+        ],
+      }
+    },
   },
 })
 </script>

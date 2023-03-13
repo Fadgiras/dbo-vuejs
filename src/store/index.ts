@@ -43,9 +43,25 @@ class Fish {
   }
 }
 
+import series from '../../ventes/medium.json'
+const data = series as Vente[]
+export type ProductAmount = {
+  amount: number
+  pid: number
+}
+
+export type Vente = {
+  date: string | Date
+  id: string
+  price: number
+  type: 'IN' | 'OUT'
+  products: ProductAmount[]
+}
+
 const store = createStore({
   state: {
     fishArray: [Fish],
+    data,
   },
   getters: {
     getFishById:
@@ -65,15 +81,12 @@ const store = createStore({
   mutations: {
     loadAllFish(state, fishArray) {
       state.fishArray = fishArray
-      console.log(state.fishArray)
     },
     updateFish(state, selectedfish) {
-      console.log(selectedfish)
       const index = state.fishArray.findIndex(
         fish => fish.id === selectedfish.id
       )
       state.fishArray[index] = selectedfish
-      console.log(state.fishArray[index])
     },
     deleteFish(state, selectedfish) {
       const index = state.fishArray.findIndex(
