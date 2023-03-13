@@ -1,7 +1,7 @@
-import { Store } from '@/store';// path to store file
-
+/* eslint-disable */
+import { Store } from '@/store'
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $store: Store;
+    $store: Store
   }
 }

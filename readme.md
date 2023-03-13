@@ -23,3 +23,7 @@ yarn build
 ```
 yarn lint
 ```
+
+```
+yarn prettier --write .
+```
