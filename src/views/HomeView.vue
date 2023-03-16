@@ -10,7 +10,7 @@
           class="bloc bg-blue-200 p-4 w-max-content shadow-sm border rounded outline outline-1 hover:bg-blue-300"
         >
           <div>
-            {{ fish.name }}
+            {{ fish.name  +" "+ fish.id }}
           </div>
           <div class="text-sm italic font-light">
             {{

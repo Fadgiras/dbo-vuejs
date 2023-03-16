@@ -2,9 +2,8 @@
   <div class="home">
     <header class="sticky top-0"></header>
     <main>
-      <div class="text-3xl pb-16 m-8">Stats de ventes</div>
-      <div class="hidden">{{ sumByDay }} €</div>
-      <div class="max-w-[50%]">
+      <div class="text-3xl pb-16 m-8">Stats de ventes : {{ sumOut }} €</div>
+      <div class="max-w-16">
         <VueApexCharts
           type="area"
           height="350"
@@ -19,7 +18,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useStore } from 'vuex'
 import VueApexCharts from 'vue3-apexcharts'
 import store from '@/store'
 
@@ -41,8 +39,10 @@ export default defineComponent({
     sumByDay() {
       let out: number[] = []
       let expense: number[] = []
-      let label: number | Date | string[] = []
+      let label: string[] = []
       let mainData = store.state.data
+
+      mainData = mainData.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
       // console.log(mainData.length)
 
@@ -102,6 +102,12 @@ export default defineComponent({
         ],
       }
     },
+    sumAmountByProdStack(){
+      let mainData = store.state.data
+      let tab: number[][] = []
+      
+      
+    }
   },
 })
 </script>

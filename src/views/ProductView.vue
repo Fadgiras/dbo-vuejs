@@ -21,7 +21,7 @@
             }}
           </div>
           <div>
-            <div>{{ fish.price + '€ /' + fish.unit }}</div>
+            <div>{{ fish.sale ? fish.discount + '€ /' + fish.unit : fish.price + '€ /' + fish.unit }}</div>
           </div>
         </div>
         <div class="p-4">
