@@ -2,23 +2,21 @@
   <div class="home">
     <header class="sticky top-0"></header>
     <main class="overflow-y-hidden text-xl">
-      <div class="grid grid-cols-3 gap-4 m-8">
-        <div
-          v-for="fish in $store.state.fishArray"
-          v-on:click.stop.prevent="openWindow(fish.id)"
-          :key="fish.id"
-          class="bloc bg-blue-200 p-4 w-max-content shadow-sm border rounded outline outline-1 hover:bg-blue-300"
-        >
-          <div>
-            {{ fish.name  +" "+ fish.id }}
-          </div>
-          <div class="text-sm italic font-light">
-            {{
-              fish.comments == ''
-                ? 'Pas de description supplémentaire'
-                : fish.comments
-            }}
-          </div>
+      <div class="m-8">
+        Bonjour page d'accueil ! Je sais pas quoi mettre ici, mais je vais y
+        arriver ! Pour l'instant je vais juste mettre un bouton pour aller sur
+        la page de login.
+        <button class="button" v-on:click="$router.push('/login')">
+          Login
+        </button>
+        Voilà, le bouton marche, je vais pouvoir faire des tests. Pourquoi je
+        parle à moi même ? Je sais pas, c'est un réflexe.
+      </div>
+      <div >
+        <div class="grid grid-cols-3 gap-4 m-8">
+          <button class="button" v-on:click="$router.push('/products')" >
+            liste des produits
+          </button>
         </div>
       </div>
     </main>
@@ -26,17 +24,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
+export default {
   name: 'HomeView',
   components: {},
-  methods: {
-    openWindow(id: string | URL | undefined) {
-      this.$router.push('/product/' + id)
-    },
-  },
-})
+  methods: {},
+
+}
 </script>
 
 <style>

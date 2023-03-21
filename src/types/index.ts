@@ -11,7 +11,7 @@ export class Fish {
     owner: string
     static id: (
       this: void,
-      value: never, // Define the Fish class
+      value: never,
       index: number,
       obj: never[]
     ) => value is never

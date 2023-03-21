@@ -40,12 +40,13 @@
 </template>
 
 <script lang="ts">
+import { loggedIn } from '@/api'
 import store from '@/store'
 import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
 
 export default defineComponent({
-  name: 'ProductView',
+  name: 'ProductsView',
   components: {},
   methods: {
     openWindow(id: string | URL | undefined) {
@@ -62,9 +63,21 @@ export default defineComponent({
       const fish = this.$store.state.fishArray.find(
         (fish: { id: number }) => fish.id === id
       )
+      console.log(fish)
       return fish || null
     },
   },
+  beforeRouteEnter(to, from, next) {
+    console.log('beforeRouteEnter')
+    loggedIn().then((res) => {
+      console.log('loggedIn : ' + res)
+      if (!res) {
+        next('/login');
+      } else {
+        // next();
+      }
+    })
+  }
 })
 </script>
 

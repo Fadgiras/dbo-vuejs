@@ -4,6 +4,7 @@ import ProductView from '../views/ProductView.vue'
 import StatsView from '../views/StatsView.vue'
 import EditView from '../views/EditView.vue'
 import LoginView from '../views/LoginView.vue'
+import ProductsView from '../views/ListProdView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -31,6 +32,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'login',
     component: LoginView,
   },
+  {
+    path: '/products',
+    name: 'products',
+    component: ProductsView
+  }
 ]
 
 const router = createRouter({

@@ -6,11 +6,10 @@
       <div class="flex flex-row">
         <div class="flex flex-col m-8">
           <div>
-            <form action="" v-on:submit="this.submit()">
+            <form v-on:submit.prevent="submit">
               <div>
                 <input
                   v-model="name"
-                  v-on:change=""
                   class="bloc rounded border border-gray-300 shadow-sm px-3 py-2 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500 focus:border-2"
                   type="text"
                   name="username"
@@ -26,10 +25,10 @@
                   placeholder="Password"
                 />
               </div>
+              <div>
+                <button class="button" type="submit">Login</button>
+              </div>
             </form>
-            <div>
-              <button class="button" v-on:click="this.submit()">Login</button>
-            </div>
           </div>
         </div>
         <div v-if="$store.state.error">
@@ -40,9 +39,9 @@
   </div>
 </template>
 
-<script>    
-import {login, fillArray} from '../api'
-import { $router } from '../router'
+<script>
+import { login, loggedIn, fillArray } from '../api'
+import { RouteLocationNormalized, NavigationGuardNext } from 'vue-router'
 export default {
   data() {
     return {
@@ -54,9 +53,15 @@ export default {
     submit() {
       console.log(this.name)
       console.log(this.password)
-      login(this.name, this.password).then(() => fillArray()).then($router.push('/'))
+      login(this.name, this.password)
+      .then(() => console.log('fillArray'))
+        .then(() => fillArray())
+        .then(() => console.log('push'))
+        .then(() => this.$router.push('/'))
+        .then(() => console.log('loadAllFish'))
+        .then(this.$store.commit('loadAllFish'))
     },
-  },    
+  },
 }
 </script>
 

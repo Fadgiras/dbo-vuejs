@@ -38,6 +38,7 @@
 </template>
 
 <script lang="ts">
+import { loggedIn } from '@/api'
 import router from '@/router'
 import { defineComponent } from 'vue'
 import store from '../store'
@@ -58,6 +59,18 @@ export default defineComponent({
       return fish || null
     },
   },
+  
+  beforeRouteEnter(to, from, next) {
+    console.log('beforeRouteEnter')
+    loggedIn().then((res) => {
+      console.log('loggedIn : ' + res)
+      if (!res) {
+        next('/login');
+      } else {
+        next();
+      }
+    })
+  }
 })
 </script>
 

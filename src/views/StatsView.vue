@@ -20,6 +20,7 @@
 import { defineComponent } from 'vue'
 import VueApexCharts from 'vue3-apexcharts'
 import store from '@/store'
+import { loggedIn } from '@/api'
 
 export default defineComponent({
   name: 'StatsView',
@@ -109,6 +110,18 @@ export default defineComponent({
       
     }
   },
+  
+  beforeRouteEnter(to, from, next) {
+    console.log('beforeRouteEnter')
+    loggedIn().then((res) => {
+      console.log('loggedIn : ' + res)
+      if (!res) {
+        next('/login');
+      } else {
+        next();
+      }
+    })
+  }
 })
 </script>
 
