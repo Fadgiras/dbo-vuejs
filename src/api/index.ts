@@ -2,6 +2,7 @@ import store from '@/store'
 import router from '@/router'
 import { BASE_URL } from '@/api/config'
 import { Fish } from '@/types/index'
+import { isATokenExpired, isRTokenExpired } from '@/utils/jwt'
 
 export async function login(name: string, pswd: string) {
   console.log('login')
@@ -26,6 +27,10 @@ export async function login(name: string, pswd: string) {
         console.log(data.access)
         // let data2 = JSON.parse(data)
         // console.log("updateTokens called")
+
+        store.commit('updateToken', access)
+        store.commit('updateRefreshToken', refresh)
+
         localStorage.setItem('access', access)
         localStorage.setItem('refresh', refresh)
 
@@ -42,71 +47,49 @@ export async function login(name: string, pswd: string) {
   })
 }
 
-async function isTokenExpired(token: string) {
-  console.log(BASE_URL + 'infoproducts/?format=json')
-  fetch(BASE_URL + 'infoproducts/?format=json', {
-    method: 'GET', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    headers: { Authorization: 'Bearer ' + token },
-  }).then(response => {
-    console.log('expired fn : response')
-    console.log(response.status == 200)
-    if (response.status == 200) {
-      console.log('expired fn : token is valid')
-      return false
-    } else {
-      console.log('expired fn : token is invalid')
-      return true
-    }
-  })
-}
+// async function isTokenExpired(token: string) {
+//   console.log(BASE_URL + 'infoproducts/?format=json')
+//   fetch(BASE_URL + 'infoproducts/?format=json', {
+//     method: 'GET', // *GET, POST, PUT, DELETE, etc.
+//     headers: { Authorization: 'Bearer ' + token },
+//   }).then(response => {
+//     console.log('expired fn : response')
+//     console.log(response.status == 200)
+//     if (response.status == 200) {
+//       console.log('expired fn : token is valid')
+//       return false
+//     } else {
+//       console.log('expired fn : token is invalid')
+//       return true
+//     }
+//   })
+// }
 
 export async function loggedIn() {
-  let accessToken = localStorage.getItem('access')
-  let refreshToken = localStorage.getItem('refresh')
-  console.log('loggedIn')
-  console.log(accessToken)
-  console.log(refreshToken)
+  console.log('loggedIn called')
+  
+  let aTokenExp : boolean
 
-  if (!accessToken || accessToken === 'undefined') {
-    return false
-  }
-
-  let accessTokenExpired = isTokenExpired(accessToken)
-
-  console.log('accessTokenExpired')
-  console.log(!accessTokenExpired)
-  console.log('refreshToken')
-  console.log(!refreshToken)
-
-  if (!accessTokenExpired) {
-    return true
-  }
-
-  if (!refreshToken) {
-    return false
-  }
-
-  const response = await fetch(BASE_URL + `api/token/refresh/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      refresh : refreshToken,
-    }),
+  await isATokenExpired(store.state.accessT).then((res) => {
+    console.log('isATokenExpired')
+    console.log(res)
+    aTokenExp = res
   })
-
-  console.log('aaaaaa ' + response.ok)
-  if (!response.ok) {
-    localStorage.removeItem('access')
-    localStorage.removeItem('refresh')
-    return false
-  } else {
-    const data = await response.json()
-    localStorage.setItem('access', data.access)
-    return true
-  }
+  .then(async () => {
+    if (aTokenExp) {
+      console.log('aTokenExp')
+      let rTokenExp = await isRTokenExpired(store.state.refreshT)
+      if (rTokenExp) {
+        console.log('rTokenExp')
+        return false
+      } else {
+        console.log('rToken not Exp')
+        refreshToken()
+        return true
+      }
+    }
+  })
+  return true
 }
 
 export function fillArray() {
@@ -151,4 +134,34 @@ export function fillArray() {
     })
     .then(() => console.log('blep'))
     .catch(error => console.error(error))
+}
+
+export async function refreshToken() {
+  const resp = await fetch(BASE_URL + 'token/refresh/', {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    body: JSON.stringify({refresh : store.state.refreshT}), // body data type must match "Content-Type" header
+  })
+
+  let data = await resp.json()
+
+  if (resp.status == 200) {
+    console.log('refresh ok')
+    store.commit('updateTokens', {
+      accessT: data.access,
+      refreshT: data.refresh,
+    })
+  }
+
+  console.log('refresh')
+  console.log(data)
+  return data
+}
+
+export async function logout() {
+  console.log('logout')
+  localStorage.removeItem('access')
+  localStorage.removeItem('refresh')
+  store.commit('updateTokens', { accessT: '', refreshT: '' })
+  router.push('/login')
 }

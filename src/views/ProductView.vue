@@ -74,7 +74,7 @@ export default defineComponent({
       if (!res) {
         next('/login');
       } else {
-        // next();
+        next();
       }
     })
   }

@@ -28,7 +28,10 @@
   <script lang="ts">
   import { defineComponent } from 'vue'
   import { RouteLocationNormalized, NavigationGuardNext } from 'vue-router'
-  import { loggedIn } from '@/api'
+  import { loggedIn, refreshToken } from '@/api'
+  import { getFish } from '@/api/fish'
+  import {isATokenExpired, isRTokenExpired} from './../utils/jwt'
+import store from '@/store'
   
   export default defineComponent({
     name: 'ListProdView',
@@ -46,7 +49,14 @@
         if (!res) {
           next('/login');
         } else {
-          next();
+          
+            console.log('getFish')
+            console.log(store.state.accessT)
+            console.log("========================")
+            getFish(store, store.state.accessT).then(() => next());
+            next();
+          
+          
         }
       })
     }

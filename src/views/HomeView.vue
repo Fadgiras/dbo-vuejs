@@ -1,6 +1,12 @@
 <template>
   <div class="home">
-    <header class="sticky top-0"></header>
+    <header class="sticky top-0">
+      <div>
+        <button v-on:click="poof()">
+          POOF
+        </button>
+      </div>
+    </header>
     <main class="overflow-y-hidden text-xl">
       <div class="m-8">
         Bonjour page d'accueil ! Je sais pas quoi mettre ici, mais je vais y
@@ -24,10 +30,15 @@
 </template>
 
 <script lang="ts">
+import { logout } from '@/api';
 export default {
   name: 'HomeView',
   components: {},
-  methods: {},
+  methods: {
+    poof(){
+      logout();
+    }
+  },
 
 }
 </script>

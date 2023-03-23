@@ -54,12 +54,8 @@ export default {
       console.log(this.name)
       console.log(this.password)
       login(this.name, this.password)
-      .then(() => console.log('fillArray'))
-        .then(() => fillArray())
         .then(() => console.log('push'))
         .then(() => this.$router.push('/'))
-        .then(() => console.log('loadAllFish'))
-        .then(this.$store.commit('loadAllFish'))
     },
   },
 }
