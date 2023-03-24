@@ -36,10 +36,13 @@ export async function isRTokenExpired(token : string) {
   }
 
   console.log('isRTokenExpired called, token is: ' + token)
-  await fetch(BASE_URL + 'api/token/refresh', {
+  await fetch(BASE_URL + 'api/token/refresh/?format=json', {
     method: 'POST', // GET, *POST, PUT, DELETE, etc.
-    headers: { Authorization: 'Bearer ' + token },
     mode: 'cors', // no-cors, *cors, same-origin
+    body: JSON.stringify({ refresh: token }), // body data type must match "Content-Type" header
+    headers: {
+      'Content-Type': 'application/json',
+    },
   }).then(response => {
     if (response.status == 200) {
       console.log('token is valid from isRTokenExpired')

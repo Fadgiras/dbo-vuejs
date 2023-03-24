@@ -1,27 +1,21 @@
 <template>
   <div class="home">
     <header class="sticky top-0">
-      <div>
-        <button v-on:click="poof()">
-          POOF
+      <div class="flex w-full">
+        <button class="button mr-auto mt-2" v-on:click="$router.push('/')">
+          Home
         </button>
+        <button class="button ml-auto mt-2" v-on:click="poof()">Logout</button>
       </div>
     </header>
     <main class="overflow-y-hidden text-xl">
-      <div class="m-8">
-        Bonjour page d'accueil ! Je sais pas quoi mettre ici, mais je vais y
-        arriver ! Pour l'instant je vais juste mettre un bouton pour aller sur
-        la page de login.
-        <button class="button" v-on:click="$router.push('/login')">
-          Login
-        </button>
-        Voilà, le bouton marche, je vais pouvoir faire des tests. Pourquoi je
-        parle à moi même ? Je sais pas, c'est un réflexe.
-      </div>
-      <div >
+      <div class="m-8 flex flex-cols">Bonjour page d'accueil !</div>
+      <div>
         <div class="grid grid-cols-3 gap-4 m-8">
-          <button class="button" v-on:click="$router.push('/products')" >
-            liste des produits
+          <button class="button" v-on:click="$router.push('/products')">
+            liste des produits</button
+          ><button class="button" v-on:click="$router.push('/login')">
+            Login
           </button>
         </div>
       </div>
@@ -30,16 +24,16 @@
 </template>
 
 <script lang="ts">
-import { logout } from '@/api';
+import { logout } from '@/api'
+import router from '@/router'
 export default {
   name: 'HomeView',
   components: {},
   methods: {
-    poof(){
-      logout();
-    }
+    poof() {
+      logout()
+    },
   },
-
 }
 </script>
 

@@ -1,6 +1,10 @@
 <template>
   <div class="home">
-    <header class="sticky top-0"></header>
+    <header class="sticky top-0">
+      <button class="button mr-auto mt-2 p-4" v-on:click="$router.push('/')">
+        Home
+      </button>
+    </header>
     <main>
       <div v-if="fish">
         <div v-if="fish" class="bloc grid grid-cols-2 p-4 max-w-[50%]">
@@ -21,7 +25,13 @@
             }}
           </div>
           <div>
-            <div>{{ fish.sale ? fish.discount + '€ /' + fish.unit : fish.price + '€ /' + fish.unit }}</div>
+            <div>
+              {{
+                fish.sale
+                  ? discountPrice().toFixed(2) + '€ /' + fish.unit
+                  : fish.price + '€ /' + fish.unit
+              }}
+            </div>
           </div>
         </div>
         <div class="p-4">
@@ -54,7 +64,10 @@ export default defineComponent({
     },
     deleteFish(fish: any) {
       store.commit('deleteFish', fish)
-      this.$router.push('/')
+      this.$router.back()
+    },
+    discountPrice() {
+      return this.fish.price - (this.fish.discount / 100) * this.fish.price
     },
   },
   computed: {
@@ -69,15 +82,30 @@ export default defineComponent({
   },
   beforeRouteEnter(to, from, next) {
     console.log('beforeRouteEnter')
-    loggedIn().then((res) => {
+    loggedIn().then(res => {
       console.log('loggedIn : ' + res)
       if (!res) {
-        next('/login');
+        next('/login')
       } else {
-        next();
+        next()
       }
     })
-  }
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log('beforeRouteLeave')
+    loggedIn().then(res => {
+      console.log('loggedIn : ' + res)
+      if (!res) {
+        store.commit(
+          'updateError',
+          'Vous devez vous reconnecter pour accéder à cette page'
+        )
+        next('/login')
+      } else {
+        next()
+      }
+    })
+  },
 })
 </script>
 

@@ -7,6 +7,7 @@ export class Fish {
     availability: boolean
     sale: boolean
     discount: number
+    quantityInStock: number
     comments: string
     owner: string
     static id: (
@@ -24,6 +25,7 @@ export class Fish {
       availability: boolean,
       sale: boolean,
       discount: number,
+      quantityInStock: number,
       comments: string,
       owner: string
     ) {
@@ -35,6 +37,7 @@ export class Fish {
       this.availability = availability
       this.sale = sale
       this.discount = discount
+      this.quantityInStock = quantityInStock
       this.comments = comments
       this.owner = owner
     }

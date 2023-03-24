@@ -1,6 +1,10 @@
 <template>
   <div class="home">
-    <header class="sticky top-0"></header>
+    <header class="sticky top-0">
+      <button class="button mr-auto mt-2 p-4" v-on:click="$router.push('/')">
+        Home
+      </button>
+    </header>
     <main>
       <div class="text-3xl pb-16 m-8">Stats de ventes : {{ sumOut }} €</div>
       <div class="max-w-16">
@@ -43,7 +47,9 @@ export default defineComponent({
       let label: string[] = []
       let mainData = store.state.data
 
-      mainData = mainData.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+      mainData = mainData.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      )
 
       // console.log(mainData.length)
 
@@ -103,25 +109,23 @@ export default defineComponent({
         ],
       }
     },
-    sumAmountByProdStack(){
+    sumAmountByProdStack() {
       let mainData = store.state.data
       let tab: number[][] = []
-      
-      
-    }
+    },
   },
-  
+
   beforeRouteEnter(to, from, next) {
     console.log('beforeRouteEnter')
-    loggedIn().then((res) => {
+    loggedIn().then(res => {
       console.log('loggedIn : ' + res)
       if (!res) {
-        next('/login');
+        next('/login')
       } else {
-        next();
+        next()
       }
     })
-  }
+  },
 })
 </script>
 

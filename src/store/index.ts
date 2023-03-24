@@ -52,6 +52,7 @@ const store = createStore({
       const index = state.fishArray.findIndex(
         fish => fish.id === selectedfish.id
       )
+      //TODO Save to API, then update state if successful
       state.fishArray[index] = selectedfish
     },
     deleteFish(state, selectedfish) {
@@ -59,16 +60,6 @@ const store = createStore({
         fish => fish.id === selectedfish.id
       )
       state.fishArray.splice(index, 1)
-    },
-    updateTokens(state, { accessT, refreshT }) {
-      state.accessT = accessT
-      state.refreshT = refreshT
-      console.log('updateTokens')
-      console.log(accessT)
-      console.log({refreshT})
-      console.log('state')
-      console.log(state.accessT)
-      console.log(state.refreshT)
     },
     updateToken(state, accessT) {
       state.accessT = accessT
@@ -85,6 +76,13 @@ const store = createStore({
       console.log('state')
       console.log(state.refreshT)
       localStorage.setItem('refresh', refreshT)
+    }, 
+    updateError(state, error) {
+      state.error = error
+      console.log('updateError')
+      console.log({error})
+      console.log('state')
+      console.log(state.error)
     }
   },
   actions: {},
@@ -92,8 +90,8 @@ const store = createStore({
 })
 
 // Fetch data from API
-console.log('fetching data')
-console.log(localStorage.getItem('access'))
+// console.log('fetching data')
+// console.log(localStorage.getItem('access'))
 
 // loggedIn().then(res => {
 //   console.log('loggedIn : ' + res)

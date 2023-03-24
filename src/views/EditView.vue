@@ -1,26 +1,55 @@
 <template>
   <div class="home">
-    <header class="sticky top-0"></header>
+    <header class="sticky top-0">
+      <button class="button mr-auto mt-2 p-4" v-on:click="$router.push('/')">
+        Home
+      </button>
+    </header>
     <main>
       <div v-if="fish">
-        <div v-if="fish" class="bloc p-4 max-w-[50%]">
+        <div v-if="fish" class="bloc p-4 max-w-[400px]">
           <div class="text-3xl pb-16 w-max">Edit : {{ fish.name }}</div>
           <div class="wrapper">
-            <div class="w-max">Fish name :</div>
+            <div class="min-w-max">Fish name :</div>
             <input class="txt" v-model="fish.name" />
-            <div class="w-max">Sale</div>
+            <div class="min-w-max">Sale</div>
             <input
               class="check"
               type="checkbox"
               name="On sale"
               v-model="fish.sale"
             />
-            <div class="w-max">Fish Comment</div>
-            <input class="txt" v-model="fish.comments" />
-            <div class="w-max">Fish Price</div>
-            <input class="txt" v-model="fish.price" />
-            <div class="w-max">Fish unit</div>
+            <div class="min-w-max">Fish Comment</div>
+            <textarea class="txt mb-2 resize" v-model="fish.comments" />
+            <div class="min-w-max">Fish Price</div>
+            <input
+              class="txt"
+              min="0"
+              type="number"
+              step="any"
+              v-model="fish.price"
+            />
+            <div class="min-w-max">Fish Discount</div>
+            <input
+              class="txt"
+              min="0"
+              type="number"
+              step="any"
+              v-model="fish.discount"
+            />
+            <div class="min-w-max">Discount price</div>
+            <div>
+              {{ (fish.price - (fish.discount / 100) * fish.price).toFixed(2) }}
+            </div>
+            <div class="min-w-max">Fish unit</div>
             <input class="txt" v-model="fish.unit" />
+            <div class="min-w-max">Stock quantity</div>
+            <input
+              class="txt"
+              min="0"
+              type="number"
+              v-model="fish.quantityInStock"
+            />
           </div>
         </div>
         <div class="p-4">
@@ -59,18 +88,18 @@ export default defineComponent({
       return fish || null
     },
   },
-  
+
   beforeRouteEnter(to, from, next) {
     console.log('beforeRouteEnter')
-    loggedIn().then((res) => {
+    loggedIn().then(res => {
       console.log('loggedIn : ' + res)
       if (!res) {
-        next('/login');
+        next('/login')
       } else {
-        next();
+        next()
       }
     })
-  }
+  },
 })
 </script>
 

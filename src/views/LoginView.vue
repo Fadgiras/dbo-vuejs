@@ -40,8 +40,9 @@
 </template>
 
 <script>
-import { login, loggedIn, fillArray } from '../api'
+import { login, loggedIn, fillArray, initToken } from '../api'
 import { RouteLocationNormalized, NavigationGuardNext } from 'vue-router'
+import store from '../store'
 export default {
   data() {
     return {
@@ -57,6 +58,19 @@ export default {
         .then(() => console.log('push'))
         .then(() => this.$router.push('/'))
     },
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log('beforeRouteEnter from login')
+    initToken()
+    loggedIn().then(res => {
+      console.log('loggedIn : ' + res)
+      if (res) {
+        next('/')
+      }else{
+        next()
+      }
+      
+    })
   },
 }
 </script>

@@ -18,6 +18,7 @@ export async function login(name: string, pswd: string) {
     }),
   }).then(response => {
     if (response.status == 200) {
+      store.commit('updateError', null)
       console.log('login ok')
       //TODO: Json Parse data to get access and refresh token for the function
       response.json().then(data => {
@@ -68,14 +69,8 @@ export async function login(name: string, pswd: string) {
 export async function loggedIn() {
   console.log('loggedIn called')
   
-  let aTokenExp : boolean
-
-  await isATokenExpired(store.state.accessT).then((res) => {
-    console.log('isATokenExpired')
-    console.log(res)
-    aTokenExp = res
-  })
-  .then(async () => {
+  let aTokenExp : boolean = await isATokenExpired(store.state.accessT)
+  
     if (aTokenExp) {
       console.log('aTokenExp')
       let rTokenExp = await isRTokenExpired(store.state.refreshT)
@@ -85,10 +80,11 @@ export async function loggedIn() {
       } else {
         console.log('rToken not Exp')
         refreshToken()
+        store.commit('updateError', null)
         return true
       }
     }
-  })
+  store.commit('updateError', null)
   return true
 }
 
@@ -114,6 +110,7 @@ export function fillArray() {
             availability: boolean
             sale: boolean
             discount: number
+            quantityInStock: number
             comments: string
             owner: string
           }) =>
@@ -126,6 +123,7 @@ export function fillArray() {
               fishData.availability,
               fishData.sale,
               fishData.discount,
+              fishData.quantityInStock,
               fishData.comments,
               fishData.owner
             )
@@ -137,7 +135,7 @@ export function fillArray() {
 }
 
 export async function refreshToken() {
-  const resp = await fetch(BASE_URL + 'token/refresh/', {
+  const resp = await fetch(BASE_URL + 'api/token/refresh/', {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     body: JSON.stringify({refresh : store.state.refreshT}), // body data type must match "Content-Type" header
@@ -147,10 +145,8 @@ export async function refreshToken() {
 
   if (resp.status == 200) {
     console.log('refresh ok')
-    store.commit('updateTokens', {
-      accessT: data.access,
-      refreshT: data.refresh,
-    })
+    store.commit('updateToken', data.access)
+    store.commit('updateRefreshToken', data.refresh)
   }
 
   console.log('refresh')
@@ -162,6 +158,19 @@ export async function logout() {
   console.log('logout')
   localStorage.removeItem('access')
   localStorage.removeItem('refresh')
-  store.commit('updateTokens', { accessT: '', refreshT: '' })
+  store.commit('updateToken', null)
+  store.commit('updateRefreshToken', null)
   router.push('/login')
+}
+
+export function initToken() {
+  console.log('init')
+  if (localStorage.getItem('access') && localStorage.getItem('refresh')) {
+    console.log('init ok')
+    store.commit('updateToken', localStorage.getItem('access'))
+    store.commit('updateRefreshToken', localStorage.getItem('refresh'))
+    console.log('init ok 2')
+    console.log(store.state.accessT)
+    console.log(store.state.refreshT)
+  }
 }

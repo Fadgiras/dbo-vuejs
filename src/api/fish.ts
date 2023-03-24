@@ -23,6 +23,7 @@ export async function getFish(store : Store<any>, token: string) {
                 availability: boolean
                 sale: boolean
                 discount: number
+                quantityInStock: number
                 comments: string
                 owner: string
               }) =>
@@ -35,6 +36,7 @@ export async function getFish(store : Store<any>, token: string) {
                   fishData.availability,
                   fishData.sale,
                   fishData.discount,
+                  fishData.quantityInStock,
                   fishData.comments,
                   fishData.owner
                 )
