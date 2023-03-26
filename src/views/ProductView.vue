@@ -50,7 +50,8 @@
 </template>
 
 <script lang="ts">
-import { loggedIn } from '@/api'
+import { loggedIn, deleteFish} from '@/api'
+import { BASE_URL } from '@/api/config'
 import store from '@/store'
 import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
@@ -63,8 +64,7 @@ export default defineComponent({
       this.$router.push('/edit/' + id)
     },
     deleteFish(fish: any) {
-      store.commit('deleteFish', fish)
-      this.$router.back()
+      deleteFish(fish)
     },
     discountPrice() {
       return this.fish.price - (this.fish.discount / 100) * this.fish.price

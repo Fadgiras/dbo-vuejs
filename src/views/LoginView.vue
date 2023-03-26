@@ -54,9 +54,11 @@ export default {
     submit() {
       console.log(this.name)
       console.log(this.password)
-      login(this.name, this.password)
-        .then(() => console.log('push'))
-        .then(() => this.$router.push('/'))
+      login(this.name, this.password).then(() => {
+        if (store.state.error == '') {
+          this.$router.push('/')
+        }
+      })
     },
   },
   beforeRouteEnter(to, from, next) {
@@ -66,10 +68,9 @@ export default {
       console.log('loggedIn : ' + res)
       if (res) {
         next('/')
-      }else{
+      } else {
         next()
       }
-      
     })
   },
 }

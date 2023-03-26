@@ -49,10 +49,8 @@ export async function isRTokenExpired(token : string) {
       res = false
 
       response.json().then(data => {
-        let access = data.access
 
         console.log(data.access)
-        localStorage.setItem('access', access)
 
         console.log('localStorage from isRTokenExpired')
         console.log(localStorage.getItem('access'))

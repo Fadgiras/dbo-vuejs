@@ -5,6 +5,7 @@ import StatsView from '../views/StatsView.vue'
 import EditView from '../views/EditView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProductsView from '../views/ListProdView.vue'
+import CreateView from '../views/CreateView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -36,7 +37,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/products',
     name: 'products',
     component: ProductsView
-  }
+  },
+  {
+    path: '/createProduct',
+    name: 'createProduct',
+    component: CreateView
+  },
 ]
 
 const router = createRouter({

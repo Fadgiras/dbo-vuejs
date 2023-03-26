@@ -59,6 +59,8 @@ const store = createStore({
       const index = state.fishArray.findIndex(
         fish => fish.id === selectedfish.id
       )
+      console.log('deleteFish')
+      console.log({index})
       state.fishArray.splice(index, 1)
     },
     updateToken(state, accessT) {

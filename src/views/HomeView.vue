@@ -14,8 +14,8 @@
         <div class="grid grid-cols-3 gap-4 m-8">
           <button class="button" v-on:click="$router.push('/products')">
             liste des produits</button
-          ><button class="button" v-on:click="$router.push('/login')">
-            Login
+          ><button class="button" v-on:click="$router.push('/createProduct')">
+            Création de produit
           </button>
         </div>
       </div>
