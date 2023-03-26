@@ -6,7 +6,24 @@
       </button>
     </header>
     <main>
-      <div class="text-3xl pb-16 m-8">Stats de ventes : {{ sumOut }} €</div>
+      <div class="text-3xl m-8">Stats de ventes :</div>
+      <div class="m-8">
+        <div class="flex">
+          <div class="text-xl mr-5">Total des ventes :</div>
+          <div class="text-xl">{{ sumOut }} €</div>
+        </div>
+        <div class="flex">
+          <div class="text-xl mr-5">Total des achats :</div>
+          <div class="text-xl">{{ sumIn }} €</div>
+        </div>
+        <div class="flex">
+          <div class="text-xl mr-5">Chiffre d'affaire total :</div>
+          <div class="text-xl">{{ sumIn + sumOut }} €</div>
+        </div>
+      </div>
+      <div class="m-8">
+        <div class="text-2xl pt-5">Ventes et achats par jour :</div>
+      </div>
       <div class="max-w-16">
         <VueApexCharts
           type="area"
@@ -40,6 +57,15 @@ export default defineComponent({
           sumOut += store.state.data[index].price
       }
       return sumOut
+    },
+    sumIn() {
+      let sumIn = 0
+      for (let index = 0; index < store.state.data.length; index++) {
+        // console.log(new Date(store.state.data[index].date).toLocaleDateString())
+        if (store.state.data[index].type == 'IN')
+          sumIn += store.state.data[index].price
+      }
+      return sumIn
     },
     sumByDay() {
       let out: number[] = []

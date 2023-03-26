@@ -11,7 +11,7 @@
           <div class="text-3xl pb-16 w-max">Create Fish</div>
           <div class="wrapper">
             <div class="min-w-max">Fish name :</div>
-            <input class="txt" v-model="name" />
+            <input required class="txt" v-model="name" />
             <div class="min-w-max">Fish category</div>
             <select class="txt" v-model="category">
               <option
@@ -23,7 +23,7 @@
               </option>
             </select>
             <div class="min-w-max">Sale</div>
-            <input
+            <input required
               class="check"
               type="checkbox"
               name="On sale"
@@ -32,7 +32,7 @@
             <div class="min-w-max">Fish Comment</div>
             <textarea class="txt mb-2 resize" v-model="comments" />
             <div class="min-w-max">Fish Price</div>
-            <input
+            <input required
               class="txt"
               min="0"
               type="number"
@@ -40,7 +40,7 @@
               v-model="price"
             />
             <div class="min-w-max">Fish Discount</div>
-            <input
+            <input required
               class="txt"
               min="0"
               type="number"
@@ -52,9 +52,9 @@
               {{ (price - (discount / 100) * price).toFixed(2) }}
             </div>
             <div class="min-w-max">Fish unit</div>
-            <input class="txt" v-model="unit" />
+            <input required class="txt" v-model="unit" />
             <div class="min-w-max">Stock quantity</div>
-            <input
+            <input required
               class="txt"
               min="0"
               type="number"
