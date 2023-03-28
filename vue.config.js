@@ -4,6 +4,7 @@ const webpack = require('webpack');
 
 
 module.exports = {
+  publicPath: '/dbo-vuejs/',
   configureWebpack: {
     plugins: [
       new webpack.ProvidePlugin({
