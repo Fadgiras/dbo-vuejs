@@ -3,6 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "strict": true,
+    "allowJs": true,
     "jsx": "preserve",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -20,6 +21,8 @@
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
+    "src/**/*.json",
+    "ventes/**/*.json",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",

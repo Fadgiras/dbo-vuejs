@@ -6,6 +6,7 @@ import EditView from '../views/EditView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProductsView from '../views/ListProdView.vue'
 import CreateView from '../views/CreateView.vue'
+import NotFound from '../views/NotFound.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -42,6 +43,10 @@ const routes: Array<RouteRecordRaw> = [
     path: '/createProduct',
     name: 'createProduct',
     component: CreateView
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: NotFound,
   },
 ]
 

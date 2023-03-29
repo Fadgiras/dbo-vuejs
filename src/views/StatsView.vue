@@ -1,40 +1,28 @@
 <template>
-  <div class="home">
-    <header class="sticky top-0">
-      <button class="button mr-auto mt-2 p-4" v-on:click="$router.push('/')">
-        Home
-      </button>
-    </header>
-    <main>
-      <div class="text-3xl m-8">Stats de ventes :</div>
-      <div class="m-8">
-        <div class="flex">
-          <div class="text-xl mr-5">Total des ventes :</div>
-          <div class="text-xl">{{ sumOut }} €</div>
-        </div>
-        <div class="flex">
-          <div class="text-xl mr-5">Total des achats :</div>
-          <div class="text-xl">{{ sumIn }} €</div>
-        </div>
-        <div class="flex">
-          <div class="text-xl mr-5">Chiffre d'affaire total :</div>
-          <div class="text-xl">{{ sumIn + sumOut }} €</div>
-        </div>
+  <main class="grow">
+    <div class="text-3xl m-8">Stats de ventes :</div>
+    <div class="m-8">
+      <div class="flex">
+        <div class="text-xl mr-5">Total des ventes :</div>
+        <div class="text-xl">{{ sumOut }} €</div>
       </div>
-      <div class="m-8">
-        <div class="text-2xl pt-5">Ventes et achats par jour :</div>
+      <div class="flex">
+        <div class="text-xl mr-5">Total des achats :</div>
+        <div class="text-xl">{{ sumIn }} €</div>
       </div>
-      <div class="max-w-16">
-        <VueApexCharts
-          type="area"
-          height="350"
-          ref="chart"
-          :options="sumByDay.chartOptions"
-          :series="sumByDay.series"
-        ></VueApexCharts>
+      <div class="flex">
+        <div class="text-xl mr-5">Chiffre d'affaire total :</div>
+        <div class="text-xl">{{ sumIn + sumOut }} €</div>
       </div>
-    </main>
-  </div>
+    </div>
+    <div class="m-8">
+      <div class="text-2xl pt-5">Ventes et achats par jour :</div>
+    </div>
+    <div class="max-w-16">
+      <VueApexCharts type="area" height="350" ref="chart" :options="sumByDay.chartOptions" :series="sumByDay.series">
+      </VueApexCharts>
+    </div>
+  </main>
 </template>
 
 <script lang="ts">
@@ -155,15 +143,4 @@ export default defineComponent({
 })
 </script>
 
-<style>
-.home {
-}
-header {
-  min-height: 120px;
-  background: #3c7a1f;
-}
-main {
-  overflow-y: hidden;
-  font-size: 20px;
-}
-</style>
+<style></style>
