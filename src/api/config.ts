@@ -1,1 +1,1 @@
-export const BASE_URL="http://localhost:8000/"
+export const BASE_URL="https://django-api-j4zxzqet4q-od.a.run.app/"
