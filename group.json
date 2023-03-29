@@ -1,0 +1,16 @@
+{
+    "group": [
+      {
+        "name": "mayeux-gudina",
+        "firstName": "florian"
+      }, 
+      {
+        "name": "pinot",
+        "firstName": "alexandre"
+      }
+    ],
+    "project": {
+      "frontend": "https://fadgiras.github.io/dbo-vuejs",
+      "backend": "https://django-api-j4zxzqet4q-od.a.run.app/"
+    }
+  }
