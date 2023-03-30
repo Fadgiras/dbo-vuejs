@@ -1,11 +1,8 @@
-<!-- eslint-disable prettier/prettier -->
 <template>
   <main>
-
     <div>
       <div class="header">Create Fish</div>
       <div class="inputs">
-        <!-- <div class="wrapper"> -->
         <div class="min-w-max input bg-greyd">Fish name</div>
         <input required class="txt input" v-model="name" />
         <div class="min-w-max input bg-greyd">Fish category</div>
@@ -32,17 +29,13 @@
         <input required class="txt input" min="0" type="number" v-model="quantityInStock" />
       </div>
     </div>
-    <div class="flex space-x-4">
-      <div class="p-2">
-        <button class="button input button-red" v-on:click="$router.back()">Back</button>
-      </div>
+    <div class="p-2">
+      <button class="delete-btn input button-green" v-on:click="create()">
+        Confirm Create
+      </button>
     </div>
-    <div class="flex space-x-4">
-      <div class="p-2">
-        <button class="delete-btn input button-green" v-on:click="create()">
-          Confirm Create
-        </button>
-      </div>
+    <div class="p-2">
+      <button class="button input button-red" v-on:click="$router.back()">Back</button>
     </div>
   </main>
 </template>

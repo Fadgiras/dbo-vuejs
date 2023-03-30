@@ -1,13 +1,25 @@
 <template>
   <div class="home">
-    <main class="overflow-y-hidden text-xl">
+    <main class="overflow-y-hidden text-xl text-center">
       <div class="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
         <p class="text-3xl text-gray-700 font-bold mb-5">
           Le seul intermédiaire entre la mer et vous, c'est nous!
         </p>
-        <p class="text-gray-500 text-lg">
-          Nos {{ $store.state.fishArray.length }} produits de notre terroir
-          maritimes.
+        <p class="text-gray-500 text-lg text-center">
+          Vente en direct du bateau de mon oncle, ainsi que ceux de nos collègues du port de Barfleur et de Saint Vaast la
+          Hougue(50). Nous achetons également du poisson à la criée de Cherbourg, pour pouvoir vous assurer un choix plus
+          important.
+          <br />
+          <br />
+          Depuis 2016, nous vendons la pêche artisanale de la flotte des bateaux des ports de la Manche.
+          Nous livrons à domicile, aux particuliers sur Paris et Ile de France mais également dans toute la France via
+          Chronofresh en 24h / 48h.
+          <br />
+          <br />
+          Il n'y a donc qu'un intermédiaire, (au maximum deux, la criée) entre le bateau et le consommateur final.
+          <br />
+          <br />
+          Les livraisons sur Paris et Ile de France sont effectuées, par nos propres camions frigorifiques.
         </p>
       </div>
       <div>

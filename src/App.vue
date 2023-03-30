@@ -1,7 +1,7 @@
 <template>
   <header class="sticky top-0 z-30 flex items-center justify-between flex-wrap bg-blue-500 p-6">
     <div class="flex items-center flex-shrink-0 text-white mr-6">
-      <img class="fill-current h-12 w-12 mr-2" width="54" height="54" v-on:click="$router.push('/')"
+      <img class="fill-current h-14 w-14 mr-2" width="100" height="100" v-on:click="$router.push('/')"
         src="../src/assets/bateauthibaultLogo.svg" />
       <span class="font-semibold text-xl tracking-tight lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4"
         v-on:click="$router.push('/')">Le Bateau de Thibault!</span>
