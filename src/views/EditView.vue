@@ -22,6 +22,8 @@
           <input class="txt input" v-model="fish.unit" />
           <div class="min-w-max input bg-greyd">Stock quantity</div>
           <input class="txt input" min="0" type="number" v-model="fish.quantityInStock" />
+          <div class="min-w-max input bg-greyd">Availability</div>
+          <input required class="check" type="checkbox" name="availability" v-model="fish.availability" />
         </div>
       </div>
       <div class="p-4">

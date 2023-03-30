@@ -27,6 +27,8 @@
         <input required class="txt input" v-model="unit" />
         <div class="min-w-max input bg-greyd">Stock quantity</div>
         <input required class="txt input" min="0" type="number" v-model="quantityInStock" />
+        <div class="min-w-max input bg-greyd">Availability</div>
+        <input required class="check" type="checkbox" name="availability" v-model="availability" />
       </div>
     </div>
     <div class="p-2">
